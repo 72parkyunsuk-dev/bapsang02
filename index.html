@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오늘의 밥상</title>
+<style>
+  :root {
+    --bg: #f6ead8;          /* 한지 */
+    --ink: #4a2e1f;         /* 먹빛 갈색 */
+    --table: #8b4a2b;       /* 소반 옻칠 */
+    --table-edge: #5e2f1a;
+    --table-top: #a65d36;
+    --card: #fffaf1;
+    --accent: #c0392b;      /* 고추장 빨강 */
+    --muted: #8a6a55;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 10%, #fbf3e6 0, transparent 40%),
+      radial-gradient(circle at 80% 90%, #efdcc2 0, transparent 45%),
+      var(--bg);
+    color: var(--ink);
+    font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px 48px;
+  }
+  h1 {
+    margin: 0 0 4px;
+    font-size: clamp(28px, 6vw, 44px);
+    letter-spacing: 0.15em;
+  }
+  .date { margin: 0 0 28px; color: var(--muted); font-size: 15px; }
+
+  /* 둥근 상 */
+  .sang {
+    width: min(92vw, 600px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--table-top), var(--table) 65%);
+    border: 14px solid var(--table-edge);
+    box-shadow:
+      inset 0 0 0 3px rgba(255, 220, 180, 0.25),
+      inset 0 10px 40px rgba(0, 0, 0, 0.25),
+      0 24px 0 -6px #4a2414,
+      0 36px 50px rgba(74, 36, 20, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12%;
+  }
+
+  /* 반찬 목록 → 카드 */
+  .banchan {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 14px;
+  }
+  .banchan li {
+    width: 108px;
+    padding: 16px 8px 14px;
+    background: var(--card);
+    border-radius: 18px;
+    border: 2px solid #ecd9bf;
+    box-shadow: 0 6px 14px rgba(60, 25, 10, 0.3);
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    transition: transform 0.2s;
+  }
+  .banchan li:hover { transform: translateY(-4px) rotate(-1deg); }
+  .banchan li::before {
+    content: attr(data-emoji);
+    display: block;
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .hint { margin-top: 44px; color: var(--muted); font-size: 14px; text-align: center; }
+  .hint code { background: #fffaf1; padding: 2px 6px; border-radius: 6px; color: var(--accent); }
+
+  @media (max-width: 480px) {
+    .sang { border-width: 10px; padding: 10%; }
+    .banchan { gap: 8px; }
+    .banchan li { width: 78px; padding: 10px 4px; font-size: 14px; }
+    .banchan li::before { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+  <h1>오늘의 밥상</h1>
+  <p class="date" id="date"></p>
+
+  <div class="sang">
+    <!--
+      ▼ 반찬 목록 ▼
+      한 줄씩 추가하면 상 위에 카드가 늘어나요.
+      형식:  <li data-emoji="이모지">이름</li>
+      예시:  <li data-emoji="🥚">계란말이</li>
+    -->
+    <ul class="banchan">
+      <li data-emoji="🍚">밥</li>
+      <li data-emoji="🍲">국</li>
+      <li data-emoji="🥬">김치</li>
+    </ul>
+  </div>
+
+  <p class="hint">반찬을 더하려면 HTML의 목록에 <code>&lt;li data-emoji="🥚"&gt;계란말이&lt;/li&gt;</code> 한 줄을 추가하세요.</p>
+
+<script>
+  document.getElementById('date').textContent =
+    new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+</script>
+</body>
+</html>
